@@ -17,9 +17,28 @@ namespace Business.Concrete
             _vehicleDal = vehicleDal;
         }
 
+        public void Add(Vehicle entity)
+        {
+            if (entity.Name.Length>=2 && entity.DailyPrice >=0 )
+            {
+                _vehicleDal.Add(entity);
+            }
+        }
+
         public List<Vehicle> GetAll()
         {
             return _vehicleDal.GetAll();
         }
+
+        public List<Vehicle> GetCarsByBrandId(int Id)
+        {
+            return _vehicleDal.GetAll(vehicle=>vehicle.Id == Id);
+        }
+
+        public List<Vehicle> GetCarsByColorId(int Id)
+        {
+            return _vehicleDal.GetAll(vehicle => vehicle.Id == Id);
+        }
     }
+    
 }

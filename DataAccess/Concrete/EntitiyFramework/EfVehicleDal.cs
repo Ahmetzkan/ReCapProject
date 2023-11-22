@@ -1,8 +1,12 @@
 ﻿using DataAccess.Abstract;
+using Entities.Abstract;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,29 +14,50 @@ namespace DataAccess.Concrete.EntitiyFramework
 {
     public class EfVehicleDal : IVehicleDal
     {
-        public void Add(Vehicle vehicle)
+        public void Add(Vehicle entity)
         {
-            throw new NotImplementedException();
+            using (RentACarContext context = new RentACarContext())
+            {
+                var addedEntity = context.Entry(entity);
+                addedEntity.State = EntityState.Added;
+                context.SaveChanges();
+            }
         }
 
-        public void Delete(Vehicle vehicle)
+        public void Delete(Vehicle entity)
         {
-            throw new NotImplementedException();
+            using (RentACarContext context = new RentACarContext())
+            {
+                var deletedEntity = context.Entry(entity);
+                deletedEntity.State = EntityState.Deleted;
+                context.SaveChanges();
+            }
         }
 
-        public List<Vehicle> GetAll()
+        public Vehicle Get(Expression<Func<Vehicle, bool>> filter)
         {
-            return new List<Vehicle> { new Vehicle { VehicleId = 1 }, new Vehicle { VehicleId = 2 } };
+            using (RentACarContext context = new RentACarContext())
+            {
+                return context.Set <Vehicle>().SingleOrDefault(filter);
+            }
         }
 
-        public List<Vehicle> GetById(int VehicleId)
+        public List<Vehicle> GetAll(Expression<Func<Vehicle, bool>> filter = null)
         {
-            throw new NotImplementedException();
+            using (RentACarContext context = new RentACarContext())
+            {
+                return filter == null ? context.Set<Vehicle>().ToList() : context.Set<Vehicle>().Where(filter).ToList();
+            }
         }
 
-        public void Update(Vehicle vehicle)
+        public void Update(Vehicle entity)
         {
-            throw new NotImplementedException();
+            using (RentACarContext context = new RentACarContext())
+            {
+                var updatedEntity = context.Entry(entity);
+                updatedEntity.State = EntityState.Modified;
+                context.SaveChanges();
+            }
         }
     }
 }
