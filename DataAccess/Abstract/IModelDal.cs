@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Abstract
 {
-    public interface IColorDal : IEntityRepository<Entities.Concrete.Color>
+    public interface IModelDal : IEntityRepository<Entities.Concrete.Model>
     {
 
     }

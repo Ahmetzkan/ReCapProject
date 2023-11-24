@@ -1,8 +1,11 @@
 ﻿using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
+using Entities.Abstract;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -10,29 +13,29 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntitiyFramework
 {
-    public class EfBrandDal : EfEntityRepositoryBase<Brand, RentACarContext>, IBrandDal
+    public class EfModelDal : EfEntityRepositoryBase<Model, RentACarContext>, IModelDal
     {
-        public void Add(Brand entity)
+        public void Add(IModelDal entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(Brand entity)
+        public void Delete(IModelDal entity)
         {
             throw new NotImplementedException();
         }
 
-        public Brand Get(Expression<Func<Brand, bool>> filter)
+        public IModelDal Get(Expression<Func<IModelDal, bool>> filter)
         {
             throw new NotImplementedException();
         }
 
-        public List<Brand> GetAll(Expression<Func<Brand, bool>> filter = null)
+        public List<IModelDal> GetAll(Expression<Func<IModelDal, bool>> filter = null)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Brand entity)
+        public void Update(IModelDal entity)
         {
             throw new NotImplementedException();
         }

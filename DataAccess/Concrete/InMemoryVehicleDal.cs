@@ -1,5 +1,6 @@
 ﻿using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTO_s;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,6 +66,11 @@ namespace DataAccess.Concrete
         }
 
         public List<Vehicle> GetVehiclesByColorId(int colorId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<VehicleDetailsDto> GetVehicleDetails()
         {
             throw new NotImplementedException();
         }

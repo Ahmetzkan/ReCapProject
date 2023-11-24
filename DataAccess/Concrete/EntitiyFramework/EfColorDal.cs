@@ -1,4 +1,6 @@
-﻿using DataAccess.Abstract;
+﻿using Core.DataAccess.EntityFramework;
+using DataAccess.Abstract;
+using DataAccess.Concrete.EntitiyFramework;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfColorDal : IColorDal
+    public class EfColorDal : EfEntityRepositoryBase<Color,RentACarContext>,IColorDal
     {
         public void Add(Color entity)
         {
