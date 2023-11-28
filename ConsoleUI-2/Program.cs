@@ -32,9 +32,17 @@ VehicleManager vehicleManager = new VehicleManager(new EfVehicleDal());
 //    Console.WriteLine(vehicleDal.Name);
 //}
 
-foreach (var vehicle in vehicleManager.GetVehicleDetails())
+var result = vehicleManager.GetVehicleDetails();
+if (result.Success == true)
 {
-    Console.WriteLine("Car Brand: " + vehicle.BrandName);
-    Console.WriteLine("Car Color: " + vehicle.ColorName);
-    Console.WriteLine("Car Daily Price: " + vehicle.DailyPrice);
+    foreach (var vehicle in vehicleManager.GetVehicleDetails().Data)
+    {
+        Console.WriteLine("Vehicle Brand: " + vehicle.BrandName);
+        Console.WriteLine("Vehicle Color: " + vehicle.ColorName);
+        Console.WriteLine("Vehicle Daily Price: " + vehicle.DailyPrice);
+    }
+}
+else
+{
+    Console.WriteLine(result.Message);
 }

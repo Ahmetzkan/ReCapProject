@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntitiyFramework;
 using Entities.Concrete;
@@ -20,24 +22,33 @@ namespace Business.Concrete
             _modelDal = modelDal;
         }
 
-        public void Add(Model model)
+        public IResult Add(Model model)
         {
             _modelDal.Add(model);
+            return new SuccessResult(Messages.ModelAdded);
         }
 
-        public void Delete(Model model)
+        public IResult Delete(Model model)
         {
             _modelDal.Delete(model);
+            return new SuccessResult(Messages.ModelDeleted);
+
         }
 
-        public List<Model> GetAll()
+        public IDataResult<List<Model>> GetAll()
         {
-            return _modelDal.GetAll();
+            return new SuccessDataResult<List<Model>>(_modelDal.GetAll());
+        }
+        public IDataResult<Model> GetById(int Id)
+        {
+            return new SuccessDataResult<Model>(_modelDal.Get(m=>m.Id == Id));
         }
 
-        public void Update(Model model)
+        public IResult Update(Model model)
         {
             _modelDal.Update(model);
+            return new SuccessResult(Messages.ModelUpdate);
+
 
         }
     }

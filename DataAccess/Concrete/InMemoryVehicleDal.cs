@@ -70,7 +70,7 @@ namespace DataAccess.Concrete
             throw new NotImplementedException();
         }
 
-        public List<VehicleDetailsDto> GetVehicleDetails()
+        public List<VehicleDetailsDto> GetVehicleDetails(Expression<Func<VehicleDetailsDto, bool>> filter = null)
         {
             throw new NotImplementedException();
         }

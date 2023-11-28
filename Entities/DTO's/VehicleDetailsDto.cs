@@ -10,7 +10,6 @@ namespace Entities.DTO_s
     public class VehicleDetailsDto:IDto
     {
         public int VehicleId { get; set; }
-        
         public string BrandName { get; set; }
         public string ModelName { get; set; }
         public string ColorName { get; set; }

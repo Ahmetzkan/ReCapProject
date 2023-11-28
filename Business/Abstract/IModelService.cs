@@ -1,4 +1,5 @@
-﻿using Entities.Concrete;
+﻿using Core.Utilities.Results;
+using Entities.Concrete;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,10 @@ namespace Business.Abstract
 {
     public interface IModelService
     {
-        List<Model> GetAll();
-        void Add(Model model);
-        void Update(Model model);
-        void Delete(Model model);
+        IDataResult<List<Model>> GetAll();
+        IDataResult<Model> GetById(int Id);
+        IResult Add(Model model);
+        IResult Update(Model model);
+        IResult Delete(Model model);
     }
 }

@@ -1,5 +1,8 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntitiyFramework;
 using Entities.Concrete;
 using Entities.DTO_s;
 using System;
@@ -18,53 +21,58 @@ namespace Business.Concrete
             _vehicleDal = vehicleDal;
         }
 
-        public void Add(Vehicle entity)
+        public IResult Add(Vehicle vehicle)
         {
-            if (entity.Name.Length>=2 && entity.DailyPrice >=0 )
+            if (vehicle.Name.Length >= 2 && vehicle.DailyPrice >= 0)
             {
-                _vehicleDal.Add(entity);
+                _vehicleDal.Add(vehicle);
             }
+            return new SuccessResult(Messages.VehicleAdded);
         }
 
-        public void Delete(Vehicle vehicle)
+        public IResult Delete(Vehicle vehicle)
         {
-            throw new NotImplementedException();
+            _vehicleDal.Delete(vehicle);
+            return new SuccessResult(Messages.VehicleDeleted);
         }
 
-        public List<Vehicle> GetAll()
+        public IResult Update(Vehicle vehicle)
         {
-            return _vehicleDal.GetAll();
+            _vehicleDal.Update(vehicle);
+            return new SuccessResult(Messages.VehicleUpdate);
+
         }
 
-        public List<Vehicle> GetById(int Id)
+        public IDataResult<List<Vehicle>> GetAll()
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll());
         }
 
-        public List<Vehicle> GetCarsByBrandId(int Id)
+        public IDataResult<List<Vehicle>> GetById(int id)
         {
-            return _vehicleDal.GetAll(vehicle=>vehicle.Id == Id);
+            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(v => v.Id == id));
         }
 
-        public List<Vehicle> GetCarsByColorId(int Id)
+        public IDataResult<List<VehicleDetailsDto>> GetVehicleDetails()
         {
-            return _vehicleDal.GetAll(vehicle => vehicle.Id == Id);
+            return new SuccessDataResult<List<VehicleDetailsDto>>(_vehicleDal.GetVehicleDetails());
         }
 
-        public void Update(Vehicle vehicle)
+        public IDataResult<List<Vehicle>> GetVehiclesByBrandId(int Id)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(v => v.Id == Id));
         }
 
-        public List<VehicleDetailsDto> GetVehicleDetails()
+        public IDataResult<List<Vehicle>> GetVehiclesByColorId(int Id)
         {
-            return _vehicleDal.GetVehicleDetails();
+            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(v => v.Id == Id));
         }
 
-        List<Vehicle> IVehicleService.GetVehicleDetails()
+        public IDataResult<List<Vehicle>> GetVehiclesByModelId(int Id)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(v => v.Id == Id));
         }
+
     }
-    
+
 }

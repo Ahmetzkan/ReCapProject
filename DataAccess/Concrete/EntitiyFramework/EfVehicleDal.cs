@@ -16,7 +16,7 @@ namespace DataAccess.Concrete.EntitiyFramework
 {
     public class EfVehicleDal : EfEntityRepositoryBase<Vehicle, RentACarContext>, IVehicleDal
     {
-        List<VehicleDetailsDto> IVehicleDal.GetVehicleDetails()
+        public List<VehicleDetailsDto> GetVehicleDetails(Expression<Func<VehicleDetailsDto, bool>> filter = null)
         {
             using (RentACarContext context = new RentACarContext())
             {
