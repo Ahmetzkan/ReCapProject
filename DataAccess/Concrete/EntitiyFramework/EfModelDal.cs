@@ -15,29 +15,5 @@ namespace DataAccess.Concrete.EntitiyFramework
 {
     public class EfModelDal : EfEntityRepositoryBase<Model, RentACarContext>, IModelDal
     {
-        public void Add(IModelDal entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(IModelDal entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IModelDal Get(Expression<Func<IModelDal, bool>> filter)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<IModelDal> GetAll(Expression<Func<IModelDal, bool>> filter = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(IModelDal entity)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
