@@ -37,18 +37,17 @@ namespace Business.Concrete
 
         public IDataResult<List<Model>> GetAll()
         {
-            return new SuccessDataResult<List<Model>>(_modelDal.GetAll());
+            return new SuccessDataResult<List<Model>>(_modelDal.GetAll(),Messages.ModelListed);
         }
         public IDataResult<Model> GetById(int Id)
         {
-            return new SuccessDataResult<Model>(_modelDal.Get(m=>m.Id == Id));
+            return new SuccessDataResult<Model>(_modelDal.Get(m=>m.Id == Id),Messages.ModelListed);
         }
 
         public IResult Update(Model model)
         {
             _modelDal.Update(model);
-            return new SuccessResult(Messages.ModelUpdate);
-
+            return new SuccessResult(Messages.ModelUpdated);
 
         }
     }

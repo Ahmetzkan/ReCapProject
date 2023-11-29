@@ -26,8 +26,15 @@ namespace Business.Concrete
             if (vehicle.Name.Length >= 2 && vehicle.DailyPrice >= 0)
             {
                 _vehicleDal.Add(vehicle);
+                return new SuccessResult(Messages.VehicleAdded);
+               
             }
-            return new SuccessResult(Messages.VehicleAdded);
+            else
+            {
+                return new ErrorResult(Messages.FailEntry);
+            }
+            
+
         }
 
         public IResult Delete(Vehicle vehicle)
@@ -39,18 +46,18 @@ namespace Business.Concrete
         public IResult Update(Vehicle vehicle)
         {
             _vehicleDal.Update(vehicle);
-            return new SuccessResult(Messages.VehicleUpdate);
+            return new SuccessResult(Messages.VehicleUpdated);
 
         }
 
         public IDataResult<List<Vehicle>> GetAll()
         {
-            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll());
+            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(),Messages.VehicleListed);
         }
 
         public IDataResult<List<Vehicle>> GetById(int id)
         {
-            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(v => v.Id == id));
+            return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(v => v.Id == id),Messages.VehicleListed);
         }
 
         public IDataResult<List<VehicleDetailsDto>> GetVehicleDetails()

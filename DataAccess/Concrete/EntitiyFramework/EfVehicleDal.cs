@@ -31,8 +31,11 @@ namespace DataAccess.Concrete.EntitiyFramework
                                  ModelName = mo.Name,
                                  ColorName = c.Name,
                                  DailyPrice = veh.DailyPrice
+                                 
                              };
-                return result.ToList();              
+                return filter == null
+                    ? result.ToList()
+                    : result.Where(filter).ToList();
 
             }
         }

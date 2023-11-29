@@ -36,18 +36,18 @@ namespace Business.Concrete
 
         public IDataResult<List<Brand>> GetAll()
         {
-            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll());
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(),Messages.BrandListed);
         }
 
         public IDataResult<Brand> GetById(int id)
         {
-            return new SuccessDataResult<Brand>(_brandDal.Get(b => b.Id == id));
+            return new SuccessDataResult<Brand>(_brandDal.Get(b => b.Id == id),Messages.BrandListed);
         }
 
         public IResult Update(Brand brand)
         {
             _brandDal.Update(brand);
-            return new SuccessResult(Messages.BrandUpdate);
+            return new SuccessResult(Messages.BrandUpdated);
         }
     }
 }
