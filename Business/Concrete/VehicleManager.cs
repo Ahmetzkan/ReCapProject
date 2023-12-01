@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntitiyFramework;
@@ -21,19 +23,11 @@ namespace Business.Concrete
             _vehicleDal = vehicleDal;
         }
 
+        [ValidationAspect(typeof(VehicleValidator))]
         public IResult Add(Vehicle vehicle)
         {
-            if (vehicle.Name.Length >= 2 && vehicle.DailyPrice >= 0)
-            {
-                _vehicleDal.Add(vehicle);
-                return new SuccessResult(Messages.VehicleAdded);
-               
-            }
-            else
-            {
-                return new ErrorResult(Messages.FailEntry);
-            }
-            
+            _vehicleDal.Add(vehicle);
+            return new SuccessResult(Messages.VehicleAdded);
 
         }
 
