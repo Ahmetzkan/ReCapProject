@@ -3,6 +3,7 @@ using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntitiyFramework;
@@ -25,18 +26,20 @@ namespace Business.Concrete
             _brandDal = brandDal;
         }
 
-        //Validation
-        //ValidationTool.Validate(new ProductValidator(), product);
-        //[LogAspect]-->AOP.Bir metod hata verdiğinde çalışan kodlar AOP'dir.
-        //[Validate]-[Performance]-RemoveCache]-[Transaction]
-
         [ValidationAspect(typeof(BrandValidator))]
         public IResult Add(Brand brand)
         {
-            _brandDal.Add(brand);
+            IResult result = BusinessRules.Run(CheckIfBrandNameExists(brand.Name));
+            if (result != null)
+            {
+                return result;
+            }
+            _brandDal.Update(brand);
             return new SuccessResult(Messages.BrandAdded);
+            
         }
 
+        [ValidationAspect(typeof(BrandValidator))]
         public IResult Delete(Brand brand)
         {
             _brandDal.Delete(brand);
@@ -53,10 +56,22 @@ namespace Business.Concrete
             return new SuccessDataResult<Brand>(_brandDal.Get(b => b.Id == id),Messages.BrandListed);
         }
 
+        [ValidationAspect(typeof(BrandValidator))]
         public IResult Update(Brand brand)
         {
             _brandDal.Update(brand);
             return new SuccessResult(Messages.BrandUpdated);
         }
+
+        private IResult CheckIfBrandNameExists(string brandName)
+        {
+            var result = _brandDal.GetAll(b=>b.Name == brandName).Any();
+            if (result)
+            {
+                return new ErrorResult(Messages.BrandNameIsExists);
+            }
+            return new SuccessResult();
+        }
+    
     }
 }

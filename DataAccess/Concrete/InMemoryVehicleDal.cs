@@ -60,10 +60,6 @@ namespace DataAccess.Concrete
             throw new NotImplementedException();
         }
 
-        public List<Vehicle> GetCarsByColorId(int colorId)
-        {
-            throw new NotImplementedException();
-        }
 
         public List<Vehicle> GetVehiclesByColorId(int colorId)
         {

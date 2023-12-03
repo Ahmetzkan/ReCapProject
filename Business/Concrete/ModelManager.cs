@@ -2,6 +2,7 @@
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntitiyFramework;
@@ -27,10 +28,16 @@ namespace Business.Concrete
         [ValidationAspect(typeof(ModelValidator))]
         public IResult Add(Model model)
         {
+            IResult result = BusinessRules.Run(CheckIfModelNameExists(model.Name));
+            if (result != null)
+            {
+                return result;
+            }
             _modelDal.Add(model);
             return new SuccessResult(Messages.ModelAdded);
         }
 
+        [ValidationAspect(typeof(ModelValidator))]
         public IResult Delete(Model model)
         {
             _modelDal.Delete(model);
@@ -47,11 +54,21 @@ namespace Business.Concrete
             return new SuccessDataResult<Model>(_modelDal.Get(m=>m.Id == Id),Messages.ModelListed);
         }
 
+        [ValidationAspect(typeof(ModelValidator))]
         public IResult Update(Model model)
         {
             _modelDal.Update(model);
             return new SuccessResult(Messages.ModelUpdated);
 
+        }
+        private IResult CheckIfModelNameExists(string modelName)
+        {
+            var result = _modelDal.GetAll(m => m.Name == modelName).Any();
+            if (result)
+            {
+                return new ErrorResult(Messages.ModelNameIsExists);
+            }
+            return new SuccessResult();
         }
     }
 }

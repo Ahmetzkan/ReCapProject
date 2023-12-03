@@ -28,15 +28,17 @@ namespace Business.Concrete
         {
             _vehicleDal.Add(vehicle);
             return new SuccessResult(Messages.VehicleAdded);
-
         }
 
+
+        [ValidationAspect(typeof(VehicleValidator))]
         public IResult Delete(Vehicle vehicle)
         {
             _vehicleDal.Delete(vehicle);
             return new SuccessResult(Messages.VehicleDeleted);
         }
 
+        [ValidationAspect(typeof(VehicleValidator))]
         public IResult Update(Vehicle vehicle)
         {
             _vehicleDal.Update(vehicle);
@@ -72,6 +74,16 @@ namespace Business.Concrete
         public IDataResult<List<Vehicle>> GetVehiclesByModelId(int Id)
         {
             return new SuccessDataResult<List<Vehicle>>(_vehicleDal.GetAll(v => v.Id == Id));
+        }
+
+        private IResult CheckIfVehicleNameExists(string vehicleName)
+        {
+            var result = _vehicleDal.GetAll(v => v.Name == vehicleName).Any();
+            if (result)
+            {
+                return new ErrorResult(Messages.VehicleNameIsExists);
+            }
+            return new SuccessResult();
         }
 
     }

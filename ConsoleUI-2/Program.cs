@@ -13,7 +13,7 @@ using Entities.Concrete;
 //VehicleTest();
 //UserAddTest();
 //CustomerAddTest();
-RentalTest();
+//RentalTest();
 
 
 void RentalTest()
